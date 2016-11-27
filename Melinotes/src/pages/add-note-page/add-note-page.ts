@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { ViewController } from 'ionic-angular';
 
 /*
   Generated class for the AddNotePage page.
@@ -14,11 +14,23 @@ import { NavController } from 'ionic-angular';
 export class AddNotePage {
 
   description: any;
-  
-  constructor(public navCtrl: NavController) {}
 
-  ionViewDidLoad() {
-    console.log('Hello AddNotePage Page');
+  constructor(public viewCtrl: ViewController) {
+
+  }
+
+  save(): void {
+
+    let note = {
+      description: this.description
+    };
+ 
+    this.viewCtrl.dismiss(note);
+
+  }
+
+  close(): void {
+    this.viewCtrl.dismiss();
   }
 
 }
