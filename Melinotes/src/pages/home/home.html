@@ -18,13 +18,13 @@
       <ion-item>
         <ion-avatar item-left>
           <!-- TODO: Get an extraction of the description and display here-->
-          <!--<img src="https://api.adorable.io/avatars/75/{{note.description}}">-->
+          <img height="40" src="assets/images/post_it.png">
         </ion-avatar>
 
-        <p>{{note.description}}</p>
+        <button (click)="getSingleNote(note)"><p>{{note.description}}</p></button>
       </ion-item>
 
-      <ion-item-options>
+      <ion-item-options side="right">
         <button ion-button color="danger" (click)="deleteNote(note)">
           <ion-icon name="trash"></ion-icon>
           Delete

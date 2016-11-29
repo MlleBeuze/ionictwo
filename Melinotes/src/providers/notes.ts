@@ -14,30 +14,44 @@ export class Notes {
   data: any;
 
   constructor(public http: Http) {
-    console.log('Hello Notes Provider');
     this.data = null;
   }
 
   getNotes(){
-    console.log("here1");
     if (this.data) {
       return Promise.resolve(this.data);
     }
 
     return new Promise(resolve => {
-      console.log("here2");
       this.http.get('http://localhost:3000/api/notes')
         .map(res => res.json())
         .subscribe(data => {
-          this.data = data;
+          this.data = data.data;
           resolve(this.data);
-          console.log("here3");
-          console.log(this.data);
         },
-        err => {console.log("here4");console.log(err);this.logError(err);}
+        err => {this.logError(err);}
       );
     });
 
+  }
+
+  getSingleNote(id){
+    if (this.data.id == id) {
+      return Promise.resolve(this.data);
+    }
+
+    return new Promise(resolve => {
+      this.http.get('http://localhost:3000/api/notes/' + id)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data.data;
+          console.log("hrer3");
+          console.log(this.data);
+          resolve(this.data);
+        },
+        err => {this.logError(err);}
+      );
+    });
   }
 
   createNote(note){

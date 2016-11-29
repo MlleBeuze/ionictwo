@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController, ModalController } from 'ionic-angular';
 import { AddNotePage } from '../add-note-page/add-note-page';
+import { ViewNotePage } from '../view-note-page/view-note-page';
 import { Notes } from '../../providers/notes';
 
 @Component({
@@ -19,15 +20,30 @@ export class HomePage {
   ionViewDidLoad(){
 
     this.noteService.getNotes().then((data) => {
-      console.log("home.ts: ionViewDidLoad");
-      console.log(data);
       this.notes = data;
     });
 
   }
 
-  addNote(){
+  getSingleNote(note){
+    this.noteService.getSingleNote(note.id).then((data) => {
+      this.notes = data;
+      console.log("hrer22");
+      console.log(data);
 
+      let modal = this.modalCtrl.create(ViewNotePage);
+      modal.onDidDismiss(note => {
+        if(note){
+          this.notes.push(note);
+          this.noteService.createNote(note);
+        }
+      });
+
+      modal.present();
+    });
+  }
+
+  addNote(){
     let modal = this.modalCtrl.create(AddNotePage);
 
     modal.onDidDismiss(note => {
@@ -51,7 +67,7 @@ export class HomePage {
       }
 
     //Remove from database
-    this.noteService.deleteNote(note._id);
+    this.noteService.deleteNote(note.id);
   }
 
 }
