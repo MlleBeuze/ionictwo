@@ -18,28 +18,19 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
+    this.loadNotes();
+  }
 
+  loadNotes(){
     this.noteService.getNotes().then((data) => {
       this.notes = data;
     });
-
   }
 
   getSingleNote(note){
     this.noteService.getSingleNote(note.id).then((data) => {
-      this.notes = data;
-      console.log("hrer22");
-      console.log(data);
-
-      let modal = this.modalCtrl.create(ViewNotePage);
-      modal.onDidDismiss(note => {
-        if(note){
-          this.notes.push(note);
-          this.noteService.createNote(note);
-        }
-      });
-
-      modal.present();
+      let modal = this.modalCtrl.create(ViewNotePage, data);
+      modal.present(ViewNotePage);
     });
   }
 
@@ -48,11 +39,11 @@ export class HomePage {
 
     modal.onDidDismiss(note => {
       if(note){
-        this.notes.push(note);
-        this.noteService.createNote(note);
+        this.noteService.createNote(note).then((data) => {
+          this.notes.push(data);
+        });
       }
     });
-
     modal.present();
 
   }

@@ -19,6 +19,8 @@ export class Notes {
 
   getNotes(){
     if (this.data) {
+      console.log("iff blabla eksfn");
+      console.log(this.data);
       return Promise.resolve(this.data);
     }
 
@@ -45,8 +47,6 @@ export class Notes {
         .map(res => res.json())
         .subscribe(data => {
           this.data = data.data;
-          console.log("hrer3");
-          console.log(this.data);
           resolve(this.data);
         },
         err => {this.logError(err);}
@@ -59,11 +59,16 @@ export class Notes {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     console.log("Add note");
-    this.http.post('http://localhost:3000/api/notes', JSON.stringify(note), {headers: headers})
-      .subscribe(res => {
-        console.log(res.json());
-      });
-
+    return new Promise(resolve => {
+      this.http.post('http://localhost:3000/api/notes', JSON.stringify(note), {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data.data;
+          resolve(this.data);
+        },
+        err => {this.logError(err);}
+      );
+    });
   }
 
   deleteNote(id){

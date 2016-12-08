@@ -12,17 +12,15 @@
 <ion-content>
 
   <ion-list no-lines>
-
     <ion-item-sliding *ngFor="let note of notes">
+        <ion-item (click)="getSingleNote(note)">
+          <ion-avatar item-left>
+            <!-- TODO: Get an extraction of the description and display here-->
+            <img height="40" src="assets/images/post_it.png">
+          </ion-avatar>
 
-      <ion-item>
-        <ion-avatar item-left>
-          <!-- TODO: Get an extraction of the description and display here-->
-          <img height="40" src="assets/images/post_it.png">
-        </ion-avatar>
-
-        <button (click)="getSingleNote(note)"><p>{{note.description}}</p></button>
-      </ion-item>
+        <p>{{note.description}}</p>
+        </ion-item>
 
       <ion-item-options side="right">
         <button ion-button color="danger" (click)="deleteNote(note)">

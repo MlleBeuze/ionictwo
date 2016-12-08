@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
+import { ViewController, NavParams } from 'ionic-angular';
 
 /*
   Generated class for the ViewNotePage page.
@@ -15,16 +15,12 @@ export class ViewNotePage {
 
   description: any;
 
-  constructor(public viewCtrl: ViewController) {}
+  constructor(public viewCtrl: ViewController, private navParams: NavParams) {
+    console.log(this.navParams.get("description"));
+    this.description = this.navParams.get("description");
+  }
 
   save(): void {
-
-    let note = {
-      description: this.description
-    };
-
-    this.viewCtrl.dismiss(note);
-
   }
 
   close(): void {
